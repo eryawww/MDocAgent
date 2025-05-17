@@ -2,7 +2,7 @@
 # agent and model configurations should be modified in their respective config folders
 
 defaults:
-  - retrieval: image # Change this to text/image when configuring retrieval
+  - retrieval: text # Change this to text/image when configuring retrieval
   - _self_
 
 run-name: mmlb-MDA # Experiment name

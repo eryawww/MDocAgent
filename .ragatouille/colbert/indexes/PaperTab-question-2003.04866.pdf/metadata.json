@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 233 elements starting with...",
+      [
+        "Multi-SimLex: A Large-Scale Evaluation of Multilingual and Cross-Lingual Lexical Semantic Similarity https://multisimlex.com/ Ivan Vuli\u00b4c \u2217\u2660 LTL, University of Cambridge Simon Baker \u2217\u2660 LTL, University of Cambridge Edoardo Maria Ponti \u2217\u2660 LTL, University of Cambridge Ulla Petti \u2217 LTL, University of Cambridge Ira Leviant \u2217\u2217 Faculty of Industrial Engineering and Management, Technion, IIT Kelly Wing \u2217 LTL, University of Cambridge Olga Majewska \u2217 LTL, University of Cambridge Eden Bar \u2217\u2217 Faculty of Industrial Engineering and Management, Technion, IIT Matt Malone \u2217 LTL, University of Cambridge Thierry Poibeau \u2020 LATTICE Lab, CNRS and ENS/PSL and Univ.",
+        "Sorbonne nouvelle/USPC Roi Reichart \u2217\u2217 Faculty of Industrial Engineering and Management, Technion, IIT Anna Korhonen \u2217 LTL, University of Cambridge We introduce Multi-SimLex, a large-scale lexical resource and evaluation benchmark covering datasets for 12 typologically diverse languages, including major languages (e.g., Mandarin Chinese, Spanish, Russian) as well as less-resourced ones (e.g., Welsh, Kiswahili). Each language dataset is annotated for the lexical relation of semantic similarity and contains 1,888 semantically aligned concept pairs, providing a representative coverage of word classes (nouns, verbs, adjectives, adverbs), frequency ranks, similarity intervals, lexical \ufb01elds, and concreteness levels. Additionally, owing to the alignment of concepts across languages, we provide a suite of 66 cross-lingual semantic similarity datasets. Due to its extensive size and language coverage, Multi-SimLex provides entirely novel opportunities for experimental evaluation and analysis. On its monolingual \u2217\u2660Equal contribution; English Faculty Building, 9 West Road Cambridge CB3 9DA, United Kingdom.",
+        "Due to its extensive size and language coverage, Multi-SimLex provides entirely novel opportunities for experimental evaluation and analysis. On its monolingual \u2217\u2660Equal contribution; English Faculty Building, 9 West Road Cambridge CB3 9DA, United Kingdom. E-mail: {iv250,sb895,ep490,om304,alk23}@cam.ac.uk \u2217\u2217Technion City, Haifa 3200003, Israel. E-mail: {ira.leviant,edenb}@campus.technion.ac.il, roiri@ie.technion.ac.il \u2020 Rue Maurice Arnoux, 92120 Montrouge, France. E-mail: thierry.poibeau@ens.fr \u00a9 2020 N/A arXiv:2003.04866v1  [cs.CL]  10 Mar 2020"
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"PaperTab-question-2003.04866.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2025-05/17/10.22.50",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":41050,
+  "avg_doclen":176.1802575107,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"PaperTab-question-2003.04866.pdf"
+    }
+  }
+}

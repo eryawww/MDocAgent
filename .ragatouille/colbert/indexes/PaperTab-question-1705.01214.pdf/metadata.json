@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 130 elements starting with...",
+      [
+        "A Hybrid Architecture for Multi-Party Conversational Systems Maira Gatti de Bayser1, Paulo Cavalin1, Renan Souza1, Alan Braz1, Heloisa Candello1, Claudio Pinhanez1, and Jean-Pierre Briot2 1IBM Research, Rio de Janeiro, Brazil 2Sorbonne Universit\u2019es, UPMC Univ Paris 06, CNRS, Laboratoire d\u2019Informatique de Paris 6 (LIP6), Paris, France March 7, 2024 Abstract Multi-party Conversational Systems are systems with natural language interaction between one or more people or systems. From the moment that an utterance is sent to a group, to the moment that it is replied in the group by a member, several activities must be done by the system: utterance understanding, information search, reasoning, among others. In this paper we present the challenges of designing and building multi- party conversational systems, the state of the art, our proposed hybrid architecture using both norms and machine learning and some insights after implementing and evaluating one on the \ufb01nance domain.",
+        "In this paper we present the challenges of designing and building multi- party conversational systems, the state of the art, our proposed hybrid architecture using both norms and machine learning and some insights after implementing and evaluating one on the \ufb01nance domain. 1 Introduction Back to 42 BC, the philosopher Cicero has raised the issue that although there were many Oratory classes, there were none for Conversational skills [1]. He highlighted how important they were not only for politics, but also for educational purpose. Among other conversational norms, he claimed that people should be able to know when to talk in a conversation, what to talk depending on the subject of the conversation, and that they should not talk about themselves. Norms such as these may become social conventions and are not learnt at home or at school. Social conventions are dynamic and may change according to context, culture and language. In online communication, new commonsense practices are evolved faster and accepted as a norm [2], [3]. There is not a discipline for that on elementary or high schools and there are few linguistics researchers doing research on this \ufb01eld.",
+        "In online communication, new commonsense practices are evolved faster and accepted as a norm [2], [3]. There is not a discipline for that on elementary or high schools and there are few linguistics researchers doing research on this \ufb01eld. On the other hand, within the Arti\ufb01cial Intelligence area, some Conversational Systems have been created in the past decades since the test proposed by Alan Turing in 1950. The test consists of a machine\u2019s ability to exhibit intelligent behavior equivalent to, or indistinguishable from that of a human [4]. Turing proposed that a human evaluator would judge natural language conversations between a human and a machine that is designed to generate human-like responses. Since then, many systems have been created to pass the 1 arXiv:1705.01214v2  [cs.CL]  4 May 2017"
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"PaperTab-question-1705.01214.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2025-05/17/10.22.50",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":23109,
+  "avg_doclen":177.7615384615,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"PaperTab-question-1705.01214.pdf"
+    }
+  }
+}

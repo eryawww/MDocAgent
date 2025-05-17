@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 176 elements starting with...",
+      [
+        "Generalisation in Named Entity Recognition: A Quantitative Analysis Isabelle Augenstein, Leon Derczynski, Kalina Bontcheva University of She\ufb03eld, She\ufb03eld, S1 4DP, UK Abstract Named Entity Recognition (NER) is a key NLP task, which is all the more chal- lenging on Web and user-generated content with their diverse and continuously changing language. This paper aims to quantify how this diversity impacts state-of-the-art NER methods, by measuring named entity (NE) and context variability, feature sparsity, and their e\ufb00ects on precision and recall. In particu- lar, our \ufb01ndings indicate that NER approaches struggle to generalise in diverse genres with limited training data. Unseen NEs, in particular, play an impor- tant role, which have a higher incidence in diverse genres such as social media than in more regular genres such as newswire. Coupled with a higher incidence of unseen features more generally and the lack of large training corpora, this leads to signi\ufb01cantly lower F1 scores for diverse genres as compared to more regular ones.",
+        "Coupled with a higher incidence of unseen features more generally and the lack of large training corpora, this leads to signi\ufb01cantly lower F1 scores for diverse genres as compared to more regular ones. We also \ufb01nd that leading systems rely heavily on surface forms found in training data, having problems generalising beyond these, and o\ufb00er explanations for this observation. 1. Introduction Named entity recognition and classi\ufb01cation (NERC, short NER), the task of recognising and assigning a class to mentions of proper names (named entities, NEs) in text, has attracted many years of research [41; 49], analyses [44], start- ing from the \ufb01rst MUC challenge in 1995 [27]. Recognising entities is key to Email address: i.augenstein@ucl.ac.uk (Isabelle Augenstein) Preprint submitted to Elsevier February 10, 2022 arXiv:1701.02877v2  [cs.CL]  7 Mar 2017",
+        "many applications, including text summarisation [54], search [59], the semantic web [38], topic modelling [42], and machine translation [1; 56]. As NER is being applied to increasingly diverse and challenging text gen- res [61; 18; 24], this has lead to a noisier, sparser feature space, which in turn requires regularisation [10] and the avoidance of over\ufb01tting. This has been the case even for large corpora all of the same genre and with the same entity classi\ufb01cation scheme, such as ACE [40]. Recall, in particular, has been a persis- tent problem, as named entities often seem to have unusual surface forms, e.g. unusual character sequences for the given language (e.g. Szeged in an English- language document) or words that individually are typically not NEs, unless they are combined together (e.g. the White House)."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"PaperTab-question-1701.02877.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2025-05/17/10.22.50",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":26822,
+  "avg_doclen":152.3977272727,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"PaperTab-question-1701.02877.pdf"
+    }
+  }
+}

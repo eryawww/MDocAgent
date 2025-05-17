@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/PaperTab/1/2025-05-17-11-50.json
+Average Binary Correctness: 0.257

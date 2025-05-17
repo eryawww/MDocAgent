@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 133 elements starting with...",
+      [
+        "Multimodal deep learning for short-term stock volatility prediction Marcelo Sardelicha,\u2217, Suresh Manandhara aDepartment of Computer Science Deramore Lane, University of York, Heslington, York, YO10 5GH, UK Abstract Stock market volatility forecasting is a task relevant to assessing market risk. We investigate the interaction between news and prices for the one-day-ahead volatility prediction using state-of-the-art deep learning approaches. The pro- posed models are trained either end-to-end or using sentence encoders transfered from other tasks. We evaluate a broad range of stock market sectors, namely Consumer Staples, Energy, Utilities, Heathcare, and Financials. Our exper- imental results show that adding news improves the volatility forecasting as compared to the mainstream models that rely only on price data. In particular, our model outperforms the widely-recognized GARCH(1,1) model for all sectors in terms of coe\ufb03cient of determination R2, MSE and MAE, achieving the best performance when training from both news and price data.",
+        "In particular, our model outperforms the widely-recognized GARCH(1,1) model for all sectors in terms of coe\ufb03cient of determination R2, MSE and MAE, achieving the best performance when training from both news and price data. Keywords: deep learning, sequence learning, transfer learning, \ufb01nancial forecasting, volatility prediction, textual analysis, natural language preprocessing PACS: 05.10.-a, 05.40.-a 2010 MSC: 62-07, 62H99 1. Introduction Natural Language Processing (NLP) has increasingly attracted the atten- tion of the \ufb01nancial community. This trend can be explained by at least three major factors. The \ufb01rst factor refers to the business perspective. It is the eco- nomics of gaining competitive advantage using alternative sources of data and going beyond historical stock prices, thus, trading by analyzing market news automatically. The second factor is the major advancements in the technologies to collect, store, and query massive amounts of user-generated data almost in real-time. The third factor refers to the progress made by the NLP community in understanding unstructured text.",
+        "The second factor is the major advancements in the technologies to collect, store, and query massive amounts of user-generated data almost in real-time. The third factor refers to the progress made by the NLP community in understanding unstructured text. \u2217Corresponding author Email addresses: marcelo.sardelich@york.ac.uk (Marcelo Sardelich), suresh@cs.york.ac.uk (Suresh Manandhar) Preprint submitted to Neurocomputing February 8, 2022 arXiv:1812.10479v1  [q-fin.ST]  25 Dec 2018"
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"PaperTab-question-1812.10479.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2025-05/17/10.22.50",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":22738,
+  "avg_doclen":170.962406015,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"PaperTab-question-1812.10479.pdf"
+    }
+  }
+}

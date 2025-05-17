@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 137 elements starting with...",
+      [
+        "A QUESTION-ENTAILMENT APPROACH TO QUESTION ANSWERING A PREPRINT Asma Ben Abacha Dina Demner-Fushman benabachaa@nih.gov ddemner@mail.nih.gov Lister Hill Center, U.S. National Library of Medicine, U.S. National Institutes of Health, Bethesda, MD February 7, 2022 ABSTRACT One of the challenges in large-scale information retrieval (IR) is to develop \ufb01ne-grained and domain- speci\ufb01c methods to answer natural language questions. Despite the availability of numerous sources and datasets for answer retrieval, Question Answering (QA) remains a challenging problem due to the dif\ufb01culty of the question understanding and answer extraction tasks. One of the promising tracks investigated in QA is to map new questions to formerly answered questions that are \u201csimilar\u201d. In this paper, we propose a novel QA approach based on Recognizing Question Entailment (RQE) and we describe the QA system and resources that we built and evaluated on real medical questions. First, we compare machine learning and deep learning methods for RQE using different kinds of datasets, including textual inference, question similarity and entailment in both the open and clinical domains.",
+        "First, we compare machine learning and deep learning methods for RQE using different kinds of datasets, including textual inference, question similarity and entailment in both the open and clinical domains. Second, we combine IR models with the best RQE method to select entailed questions and rank the retrieved answers. To study the end-to-end QA approach, we built the MedQuAD collection of 47,457 question-answer pairs from trusted medical sources, that we introduce and share in the scope of this paper. Following the evaluation process used in TREC 2017 LiveQA, we \ufb01nd that our approach exceeds the best results of the medical task with a 29.8% increase over the best of\ufb01cial score. The evaluation results also support the relevance of question entailment for QA and highlight the effectiveness of combining IR and RQE for future QA efforts. Our \ufb01ndings also show that relying on a restricted set of reliable answer sources can bring a substantial improvement in medical QA.",
+        "The evaluation results also support the relevance of question entailment for QA and highlight the effectiveness of combining IR and RQE for future QA efforts. Our \ufb01ndings also show that relying on a restricted set of reliable answer sources can bring a substantial improvement in medical QA. Keywords Question Answering \u00b7 Recognizing Question Entailment \u00b7 Information Retrieval \u00b7 Consumer Health Questions \u00b7 Question-Answer Dataset \u00b7 Medical Domain 1 Introduction With the availability of rich data on users\u2019 locations, pro\ufb01les and search history, personalization has become the leading trend in large-scale information retrieval. However, ef\ufb01ciency through personalization is not yet the most suitable model when tackling domain-speci\ufb01c searches. This is due to several factors, such as the lexical and semantic challenges of domain-speci\ufb01c data that often include advanced argumentation and complex contextual information, the higher sparseness of relevant information sources, and the more pronounced lack of similarities between users\u2019 searches."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"PaperTab-question-1901.08079.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2025-05/17/10.22.50",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":24510,
+  "avg_doclen":178.9051094891,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"PaperTab-question-1901.08079.pdf"
+    }
+  }
+}
