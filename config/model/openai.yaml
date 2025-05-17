@@ -3,6 +3,6 @@ defaults:
   - _self_
 
 model: gpt-4o
-api_key: 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
+api_key: 
 module_name: models.openai
 class_name: MyOpenAI
