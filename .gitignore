@@ -1,2 +1,8 @@
-data/
+# Ignore everything in data/ except the data/*/sample-with-retrieval-results.json
+data/*
+!data/*/
+data/*/*
+!data/*/sample-with-retrieval-results.json
+# 
+
 __pycache__/
