@@ -16,7 +16,7 @@ class ColpaliRetrieval(BaseRetrieval):
     def __init__(self, config):
         self.config = config
         model_name = "vidore/colpali"
-        self.model = ColPali.from_pretrained("vidore/colpaligemma-3b-mix-448-base", torch_dtype=torch.float32, device_map="auto").eval()
+        self.model = ColPali.from_pretrained("vidore/colpaligemma-3b-mix-448-base", torch_dtype=torch.float32, device_map="cuda").eval()
         self.model.load_adapter(model_name)
         self.processor = AutoProcessor.from_pretrained(model_name)
     
