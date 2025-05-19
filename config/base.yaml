@@ -8,7 +8,7 @@ defaults:
 run-name: mmlb-MDA # Experiment name
 
 dataset:
-  top_k: 1 # Top-k results used during inference
+  top_k: 4 # Top-k results used during inference
 
 retrieval:
   top_k: 10 # Top-k results returned during retrieval
@@ -32,6 +32,19 @@ mdoc_agent:
   sum_agent:
     agent: sum_agent # Responsible for summarizing answers from all agents
     model: qwen2vl
+
+reflection_agent:
+  cuda_visible_devices: ${mdoc_agent.cuda_visible_devices}
+  truncate_len: ${mdoc_agent.truncate_len}
+  save_freq: ${mdoc_agent.save_freq}
+  ans_key: ${mdoc_agent.ans_key}
+  save_message: ${mdoc_agent.save_message}
+  max_reflection_iter: 3  # Maximum number of reflection iterations
+  confidence_threshold: 0.8  # Confidence threshold to stop reflection
+  
+  agents:
+    - agent: general_agent # Configures prompt and controls whether to use text/image as reference material
+      model: qwen2vl # Configures the model to use
 
 eval_agent: # Used for result evaluation
   truncate_len: null # Used for debugging; set to null for normal use
