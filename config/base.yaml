@@ -19,7 +19,7 @@ mdoc_agent:
   truncate_len: null # Used for debugging; set to null for normal use
   save_freq: 10 # Frequency of saving checkpoints
   ans_key: ans_${run-name} # Key name for generated answers during prediction
-  save_message: false # Set to true to record responses from all agents
+  save_message: true # Set to true to record responses from all agents
 
   agents:
     - agent: image_agent # Configures prompt and controls whether to use text/image as reference material

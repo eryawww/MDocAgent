@@ -18,7 +18,7 @@ class Llama3(BaseModel):
             "text-generation",
             model=self.config.model_id,
             model_kwargs={"torch_dtype": torch.bfloat16},
-            device=1,
+            device=0,
         )
     
     def create_text_message(self, texts, question): 
