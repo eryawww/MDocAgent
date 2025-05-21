@@ -8,7 +8,7 @@ class Qwen2VL(BaseModel):
         super().__init__(config)
         max_pixels = 2048*28*28
         self.model = Qwen2VLForConditionalGeneration.from_pretrained(
-            self.config.model_id, torch_dtype="auto", device_map="balanced_low_0"
+            self.config.model_id, torch_dtype=torch.bfloat16, device_map="balanced_low_0"
         )
         self.processor = AutoProcessor.from_pretrained(self.config.model_id) # , max_pixels=max_pixels
         self.create_ask_message = lambda question: {

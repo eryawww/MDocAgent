@@ -7,6 +7,7 @@ import hydra
 import os
 from typing import List, Tuple, Dict, Any, Optional, Union
 from models.base_model import BaseModel
+import importlib
 
 class ReflectionAgent(MultiAgentSystem):
     """
@@ -56,7 +57,16 @@ class ReflectionAgent(MultiAgentSystem):
                    - save_message: Whether to save messages in the dataset
                    - save_freq: Frequency of saving results
         """
-        super().__init__(config)
+        self.config = config
+        self.agents = []
+        self.models:dict = {}
+        for agent_config in self.config.agents:
+            if agent_config.model.class_name not in self.models:
+                module = importlib.import_module(agent_config.model.module_name)
+                model_class = getattr(module, agent_config.model.class_name)
+                print("Create model: ", agent_config.model.class_name)
+                self.models[agent_config.model.class_name] = model_class(agent_config.model)
+            self.add_agent(agent_config, self.models[agent_config.model.class_name])
     
     def extract_confidence(self, message: str) -> float:
         """
@@ -92,94 +102,45 @@ class ReflectionAgent(MultiAgentSystem):
         """
         if plan is None:
             # Planning prompt
-            return f"""
-                Before answering the following question, let's create a detailed plan:
+            return f"""Create a structured plan for answering: {question}
 
-                Question: {question}
+            1. Key Components: Main technical concepts, relationships
+            2. Information Requirements: Relevant context from texts/images
+            3. Answer Structure: Organization, technical detail level
+            4. Potential Challenges: Complex aspects, assumptions, possible confusion
 
-                Please create a structured plan that includes:
-                1. Key Components:
-                - What are the main technical components we need to address?
-                - What specific technical concepts need to be explained?
-                - What are the critical relationships between components?
-
-                2. Information Requirements:
-                - What specific information do we need from the provided context?
-                - Which parts of the texts/images are most relevant?
-                - Are there any technical details we need to verify?
-
-                3. Answer Structure:
-                - How should we organize the technical explanation?
-                - What level of technical detail is appropriate?
-                - How can we ensure clarity while maintaining technical accuracy?
-
-                4. Potential Challenges:
-                - What technical aspects might be complex to explain?
-                - Are there any technical assumptions we need to verify?
-                - What could be potential sources of confusion?
-
-                Based on this plan, provide your confidence in proceeding with the answer (0.0 to 1.0) by adding "Confidence: X.X" at the end of your response.
-                """
+            End with "Confidence: X.X" (0.0-1.0)
+            """
         # First answer prompt
-        return f"""
-            Based on the following plan, please provide a detailed technical answer:
+        return f"""Answer based on this plan:
 
             Question: {question}
 
             Plan: {plan}
 
-            Please provide a comprehensive technical answer that follows the plan while ensuring:
-            1. Technical accuracy and precision
-            2. Clear explanation of complex concepts
-            3. Proper use of technical terminology
-            4. Logical flow and structure
-            
-            End your response with a confidence score (0.0 to 1.0) by adding "Confidence: X.X" to indicate your confidence in this answer.
+            Ensure: Technical accuracy, clear explanations, proper terminology, logical flow.
+            End with "Confidence: X.X" (0.0-1.0)
             """
 
     def get_reflection_prompt(self, question: str, plan: str, current_ans: str) -> str:
         """
         Generate the reflection prompt for analyzing and improving the answer.
         """
-        return f"""
-            Based on the following question and my previous answer, please perform a technical analysis and reflection:
+        return f"""Analyze and improve my previous answer:
 
             Question: {question}
-            
             Plan: {plan}
+            Previous answer: {current_ans}
 
-            My previous answer: {current_ans}
+            Technical analysis:
+            1. Accuracy: Check for technical errors, term usage, appropriate depth
+            2. Completeness: Identify missing details, components, dependencies
+            3. Precision: Areas for more precise explanation, terminology, relationships
+            4. Information: Additional technical information needed
 
-            Please perform a detailed technical analysis:
-            1. Technical Accuracy:
-            - Are there any technical inaccuracies or misconceptions?
-            - Are the technical terms and concepts used correctly?
-            - Is the technical depth appropriate for the question?
-
-            2. Technical Completeness:
-            - Are there missing technical details or specifications?
-            - Are all relevant technical components addressed?
-            - Are there any technical dependencies or requirements not mentioned?
-
-            3. Technical Precision:
-            - Can the technical explanation be more precise?
-            - Are there more specific technical terms that could be used?
-            - Are the technical relationships and interactions clearly explained?
-
-            4. Information Gathering:
-            - What additional technical information would help improve the answer?
-            - Are there specific technical aspects that need more research?
-            - What technical details from the provided context (texts/images) could be better utilized?
-
-            If you're uncertain about any technical aspect:
-            1. Identify the specific technical points that need clarification
-            2. Explain what additional information would help resolve the uncertainty
-            3. If possible, gather more information from the provided context (texts/images)
-            4. If still uncertain, explicitly state what information is missing and why it's important
-
-            Provide an improved technical answer if needed, or confirm if the original answer is technically sufficient.
-            Also, provide your confidence in this technical analysis (0.0 to 1.0) by adding "Confidence: X.X" at the end of your response.
-        """
+            Provide improved answer if needed or confirm if original is sufficient.
+            End with "Confidence: X.X" (0.0-1.0)
+            """
 
     def predict(self, question: str, texts: List[str], images: List[str]) -> Tuple[str, List[Dict]]:
         """
@@ -204,20 +165,26 @@ class ReflectionAgent(MultiAgentSystem):
         plan = None
 
         while current_iter < self.config.max_reflection_iter:
+            print(f"Iteration {current_iter}")
             if current_iter == 0:
                 # First iteration: Planning phase
                 planning_prompt = self.get_initial_prompt(question)
                 plan, plan_messages = general_agent.predict(planning_prompt, texts, images)
+                print('='*20, 'plan: \n', plan)
                 all_messages.extend(plan_messages)
                 
                 # Generate initial answer based on the plan
                 answer_prompt = self.get_initial_prompt(question, plan)
+                print('='*20, 'answer_prompt: \n', answer_prompt)
                 current_ans, messages = general_agent.predict(answer_prompt, texts, images)
             else:
                 # Reflection phase
                 reflection_prompt = self.get_reflection_prompt(question, plan, current_ans)
+                print('='*20, 'reflection_prompt: \n', reflection_prompt)
                 current_ans, messages = general_agent.predict(reflection_prompt, texts, images)
 
+            print('='*20, 'current_ans: \n', current_ans)
+            print('='*20, 'messages: \n', messages)
             all_messages.extend(messages)
             current_confidence = self.extract_confidence(current_ans)
 
@@ -268,3 +235,7 @@ class ReflectionAgent(MultiAgentSystem):
                 print(f"Save {sample_no} results to {path}.")
         path = dataset.dump_reults(samples)
         print(f"Save final results to {path}.")
+    
+    def clean_messages(self):
+        for agent in self.agents:
+            agent.clean_messages()
