@@ -33,6 +33,40 @@ mdoc_agent:
     agent: sum_agent # Responsible for summarizing answers from all agents
     model: qwen2vl
 
+react_agent:
+  cuda_visible_devices: ${mdoc_agent.cuda_visible_devices}
+  truncate_len: ${mdoc_agent.truncate_len}
+  save_freq: ${mdoc_agent.save_freq}
+  ans_key: ans_${run-name}_react # Key name for generated answers during prediction
+  save_message: ${mdoc_agent.save_message}
+  max_iterations: 5  # Maximum number of ReAct iterations
+  top_k: 4  # Top-k results used during each ReAct iteration
+  
+  agents:
+    - agent: general_agent # Main agent for ReAct process
+      model: qwen2vl # Configures the model to use
+
+  retrieval:
+    image_retriever:
+      model_type: image
+      model_name: ColpaliRetrieval
+      embed_dir: ./tmp/${retrieval.model_name}/${retrieval.image_question_key}
+      batch_size: 2
+      top_k: ${retrieval.top_k}
+      doc_key: doc_id
+      image_question_key: question
+      r_image_key: r_image
+      r_image_index_key: r_image_index
+
+    text_retriever:
+      model_type: text
+      model_name: ColbertRetrieval
+      top_k: ${retrieval.top_k}
+      doc_key: doc_id
+      text_question_key: question
+      r_text_key: r_text
+      r_text_index_key: r_text_index
+
 reflection_agent:
   cuda_visible_devices: ${mdoc_agent.cuda_visible_devices}
   truncate_len: ${mdoc_agent.truncate_len}

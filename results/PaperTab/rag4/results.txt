@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/PaperTab/rag4/2025-05-19-19-22.json
+Average Binary Correctness: 0.270
