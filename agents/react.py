@@ -3,22 +3,31 @@ from tqdm import tqdm
 import torch
 import json
 from mydatasets.base_dataset import BaseDataset
-import hydra
 import os
-from retrieval.image_retrieval import ColpaliRetrieval
-from retrieval.text_retrieval import ColbertRetrieval
+from retrieval.conditional_retrieval import ConditionalColbertRetrieval, ConditionalColpaliRetrieval
 from models.qwen import Qwen2VL
+import importlib
+
 class ReActAgent(MultiAgentSystem):
     def __init__(self, config):
-        super().__init__(config)
+        self.config = config
+        self.agents = []
+        self.models:dict = {}
+        for agent_config in self.config.agents:
+            if agent_config.model.class_name not in self.models:
+                module = importlib.import_module(agent_config.model.module_name)
+                model_class = getattr(module, agent_config.model.class_name)
+                print("Create model: ", agent_config.model.class_name)
+                self.models[agent_config.model.class_name] = model_class(agent_config.model)
+            self.add_agent(agent_config, self.models[agent_config.model.class_name])
 
         # Load image retriever configuration and instantiate
         image_retriever_config = config.retrieval.image_retriever
-        self.image_retriever = ColpaliRetrieval(image_retriever_config)
+        self.image_retriever = ConditionalColpaliRetrieval(image_retriever_config)
 
         # Load text retriever configuration and instantiate
         text_retriever_config = config.retrieval.text_retriever
-        self.text_retriever = ColbertRetrieval(text_retriever_config)
+        self.text_retriever = ConditionalColbertRetrieval(text_retriever_config)
     
     def predict(self, question: str, texts: list[str], images: list[str]) -> tuple[str, list[dict]]:
         # Initialize with general agent
@@ -41,6 +50,7 @@ class ReActAgent(MultiAgentSystem):
         
         iteration = 0
         while iteration < self.config.max_iterations:
+            self.clean_messages()
             # Check if response contains an action
             if "Action:" in response:
                 action_line = response.split("Action:")[1].split("\n")[0].strip()
@@ -75,9 +85,13 @@ class ReActAgent(MultiAgentSystem):
                 
                 concatenated_messages.extend(messages)
                 final_answer = response
+
+                print('response :', response)
+
             # If response contains final answer, break the loop
             elif "Answer:" in response:
                 final_answer = response.split("Answer:")[1].strip()
+                print('final_answer :', final_answer)
                 break
             
             # If no action or answer found, break to avoid infinite loop
@@ -102,7 +116,8 @@ class ReActAgent(MultiAgentSystem):
         The query should be specific about what visual information you're looking for.
         Returns the most relevant images based on semantic similarity to your query.
         """
-        top_page_indices, top_page_scores = self.image_retriever.find_sample_top_k(query, self.config.top_k, self.config.r_image_key)
+        # FIX THIS
+        top_page_indices, top_page_scores = self.image_retriever.find_sample_top_k_conditional(sample, document_embed, self.config.top_k, None, query)
         return [images[i] for i in top_page_indices[:self.config.top_k]] if top_page_indices else images
         
     def retrieve_text(self, query: str, texts: list[str]) -> list[str]:
@@ -118,7 +133,8 @@ class ReActAgent(MultiAgentSystem):
         The query should be specific about what information you're looking for.
         Returns the most relevant text passages based on semantic similarity to your query.
         """
-        top_page_indices, top_page_scores = self.text_retriever.find_sample_top_k(query, self.config.top_k, self.config.r_text_key)
+        # FIX THIS
+        top_page_indices, top_page_scores = self.text_retriever.find_sample_top_k_conditional(sample, self.config.top_k, None, query)
         return [texts[i] for i in top_page_indices[:self.config.top_k]] if top_page_indices else texts
 
     def get_agent_prompt(self, tools: callable, question: str = None):
@@ -218,3 +234,7 @@ class ReActAgent(MultiAgentSystem):
                 print(f"Save {sample_no} results to {path}.")
         path = dataset.dump_reults(samples)
         print(f"Save final results to {path}.")
+    
+    def clean_messages(self):
+        for agent in self.agents:
+            agent.clean_messages()

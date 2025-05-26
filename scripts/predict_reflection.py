@@ -26,7 +26,7 @@ def main(cfg):
     reflection_agent = ReflectionAgent(cfg.reflection_agent)
     
     # Run the prediction
-    reflection_agent.predict_dataset(dataset, resume_path=cfg.reflection_agent.get("resume_path", None))
+    reflection_agent.predict_dataset(dataset, 'results/PaperTab/reflect/2025-05-26-11-16.json')
     
 if __name__ == "__main__":
     main() 

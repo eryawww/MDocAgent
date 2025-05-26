@@ -73,8 +73,7 @@ reflection_agent:
   save_freq: ${mdoc_agent.save_freq}
   ans_key: ${mdoc_agent.ans_key}
   save_message: ${mdoc_agent.save_message}
-  max_reflection_iter: 3  # Maximum number of reflection iterations
-  confidence_threshold: 0.8  # Confidence threshold to stop reflection
+  max_reflection_iter: 2  # Maximum number of reflection iterations
   
   agents:
     - agent: general_agent # Configures prompt and controls whether to use text/image as reference material

@@ -2,6 +2,7 @@ from models.base_model import BaseModel
 from transformers import Qwen2VLForConditionalGeneration, AutoProcessor, Qwen2_5_VLForConditionalGeneration, AutoTokenizer
 from qwen_vl_utils import process_vision_info
 import torch
+import gc
 
 class Qwen2VL(BaseModel):
     def __init__(self, config):
@@ -49,6 +50,9 @@ class Qwen2VL(BaseModel):
     @torch.no_grad()
     def predict(self, question, texts = None, images = None, history = None):
         self.clean_up()
+        gc.collect() # Garbage collect before processing
+        torch.cuda.empty_cache() # Clear PyTorch's cache
+
         messages = self.process_message(question, texts, images, history)
         text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
@@ -63,6 +67,9 @@ class Qwen2VL(BaseModel):
         )
         inputs = inputs.to("cuda")
 
+        gc.collect() # Garbage collect before model generation
+        torch.cuda.empty_cache() # Clear PyTorch's cache again
+
         generated_ids = self.model.generate(**inputs, max_new_tokens=self.config.max_new_tokens)
         generated_ids_trimmed = [
             out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
@@ -71,7 +78,15 @@ class Qwen2VL(BaseModel):
             generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
         )[0]
         messages.append(self.create_ans_message(output_text))
-        self.clean_up()
+        
+        # Clean up potentially large tensors
+        del inputs
+        del generated_ids
+        del generated_ids_trimmed
+        if 'image_inputs' in locals(): del image_inputs
+        if 'video_inputs' in locals(): del video_inputs
+        gc.collect() # Garbage collect after generation and deletion
+        self.clean_up() # Calls torch.cuda.empty_cache() internally
         return output_text, messages
         
     def is_valid_history(self, history):
