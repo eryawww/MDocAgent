@@ -29,7 +29,7 @@ class ReActAgent(MultiAgentSystem):
         text_retriever_config = config.retrieval.text_retriever
         self.text_retriever = ConditionalColbertRetrieval(text_retriever_config)
     
-    def predict(self, question: str, texts: list[str], images: list[str]) -> tuple[str, list[dict]]:
+    def predict(self, sample, question: str, texts: list[str], images: list[str]) -> tuple[str, list[dict]]:
         # Initialize with general agent
         general_agent: Qwen2VL = self.agents[0]
         
@@ -62,7 +62,7 @@ class ReActAgent(MultiAgentSystem):
                 # Handle text retrieval
                 if action_line.startswith("retrieve_text:"):
                     query = action_line.replace("retrieve_text:", "").strip()
-                    current_texts = self.retrieve_text(query, texts)
+                    current_texts = self.retrieve_text(sample, query, texts)
                     observation = f"Retrieved {len(current_texts)} relevant text passages."
                     # Add more detailed observation if texts were retrieved
                     if current_texts:
@@ -71,7 +71,7 @@ class ReActAgent(MultiAgentSystem):
                 # Handle image retrieval
                 elif action_line.startswith("retrieve_image:"):
                     query = action_line.replace("retrieve_image:", "").strip()
-                    current_images = self.retrieve_image(query, images)
+                    current_images = self.retrieve_image(sample, query, images)
                     observation = f"Retrieved {len(current_images)} relevant images."
                 else:
                     # Handle unknown action
@@ -103,7 +103,7 @@ class ReActAgent(MultiAgentSystem):
         
         return final_answer, concatenated_messages
         
-    def retrieve_image(self, query: str, images: list[str]) -> list[str]:
+    def retrieve_image(self, sample, query: str, images: list[str]) -> list[str]:
         """
         retrieve_image: <query>
         Use this action to find relevant images from the document based on your query.
@@ -117,10 +117,11 @@ class ReActAgent(MultiAgentSystem):
         Returns the most relevant images based on semantic similarity to your query.
         """
         # FIX THIS
+        document_embed = self.image_retriever.load_document_embeds(sample)
         top_page_indices, top_page_scores = self.image_retriever.find_sample_top_k_conditional(sample, document_embed, self.config.top_k, None, query)
         return [images[i] for i in top_page_indices[:self.config.top_k]] if top_page_indices else images
         
-    def retrieve_text(self, query: str, texts: list[str]) -> list[str]:
+    def retrieve_text(self, sample, query: str, texts: list[str]) -> list[str]:
         """
         retrieve_text: <query>
         Use this action to find relevant text passages from the document based on your query.
@@ -212,7 +213,7 @@ class ReActAgent(MultiAgentSystem):
                 continue
             question, texts, images = dataset.load_sample_retrieval_data(sample)
             try:
-                final_ans, final_messages = self.predict(question, texts, images)
+                final_ans, final_messages = self.predict(sample, question, texts, images)
             except RuntimeError as e:
                 print(e)
                 if "out of memory" in str(e):
