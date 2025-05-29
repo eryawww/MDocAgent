@@ -42,9 +42,6 @@ class ReflectionAgent(MultiAgentSystem):
        - Continues reflection until either:
          * Maximum iterations reached (config.max_reflection_iter)
          * Confidence threshold achieved (config.confidence_threshold)
-    
-    The agent processes both text and image inputs, maintaining a complete history of all
-    planning, generation, and reflection steps for analysis and debugging purposes.
     """
     def __init__(self, config: Any):
         """
@@ -223,9 +220,6 @@ Improve based on:
                     torch.cuda.empty_cache()
                 final_ans, final_messages = None, None
             
-            # Sample
-            # print(final_messages)
-
             sample[self.config.ans_key] = final_ans
             if self.config.save_message:
                 sample[self.config.ans_key+"_message"] = final_messages

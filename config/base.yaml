@@ -40,7 +40,7 @@ react_agent:
   ans_key: ans_${run-name}_react # Key name for generated answers during prediction
   save_message: ${mdoc_agent.save_message}
   max_iterations: 5  # Maximum number of ReAct iterations
-  top_k: 4  # Top-k results used during each ReAct iteration
+  top_k: 2  # Top-k results used during each ReAct iteration
   
   agents:
     - agent: general_agent # Main agent for ReAct process
@@ -50,12 +50,12 @@ react_agent:
     image_retriever:
       model_type: image
       model_name: ColpaliRetrieval
-      embed_dir: ./tmp/${retrieval.model_name}/${retrieval.image_question_key}
+      embed_dir: ./tmp/ColpaliRetrieval/question
       batch_size: 2
       top_k: ${retrieval.top_k}
       doc_key: doc_id
       image_question_key: question
-      r_image_key: r_image
+      r_image_key: image-top-3-question
       r_image_index_key: r_image_index
 
     text_retriever:
@@ -64,8 +64,8 @@ react_agent:
       top_k: ${retrieval.top_k}
       doc_key: doc_id
       text_question_key: question
-      r_text_key: r_text
-      r_text_index_key: r_text_index
+      r_text_key: text-top-3-question
+      r_text_index_key: text-index-path-question
 
 reflection_agent:
   cuda_visible_devices: ${mdoc_agent.cuda_visible_devices}
